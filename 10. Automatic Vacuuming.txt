@@ -1,47 +1,71 @@
-이 설정은 autovacuum 기능의 동작을 제어합니다. 자세한 내용은 섹션 24.1.6을 참조하십시오. 이러한 설정의 대부분은 테이블별로 재정의할 수 있습니다. 저장 매개변수를 참조하십시오.
+이 설정은 autovacuum 기능의 동작을 제어합니다. 자세한 내용은 섹션 24.1.6을 참조하십시오. 이러한 설정의 대부분은 테이블별로 재정의할 수 있습니다.
+저장 매개변수를 참조하십시오.
 섹션 24.1.6 : https://www.postgresql.org/docs/12/routine-vacuuming.html#AUTOVACUUM
 
 autovacuum(boolean)
-서버가 autovacuum 실행기 데몬을 실행해야 하는지 여부를 제어합니다. 기본적으로 켜져 있습니다. 그러나 autovacuum이 작동하려면 track_counts도 활성화해야 합니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대해 autovacuuming을 비활성화할 수 있습니다.
+서버가 autovacuum 실행기 데몬을 실행해야 하는지 여부를 제어합니다. 기본적으로 켜져 있습니다.
+그러나 autovacuum이 작동하려면 track_counts도 활성화해야 합니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
+그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대해 autovacuuming을 비활성화할 수 있습니다.
 
-이 매개변수가 비활성화된 경우에도 시스템은 트랜잭션 ID 랩어라운드를 방지하기 위해 필요한 경우 autovacuum 프로세스를 시작합니다. 자세한 내용은 섹션 24.1.5를 참조하십시오.
+이 매개변수가 비활성화된 경우에도 시스템은 트랜잭션 ID 랩어라운드를 방지하기 위해 필요한 경우 autovacuum 프로세스를 시작합니다.
+자세한 내용은 섹션 24.1.5를 참조하십시오.
 섹션 24.1.5 : https://www.postgresql.org/docs/12/routine-vacuuming.html#VACUUM-FOR-WRAPAROUND
 
 log_autovacuum_min_duration(integer)
-autovacuum이 실행한 각 작업이 지정된 시간 이상 실행된 경우 기록되도록 합니다. 이것을 0으로 설정하면 모든 autovacuum 작업이 기록됩니다. -1(기본값)은 autovacuum 작업 로깅을 비활성화합니다. 이 값이 단위 없이 지정되면 밀리초로 간주됩니다. 예를 들어, 이것을 250ms로 설정하면 250ms 이상 실행되는 모든 automatic vacuums 및 분석이 기록됩니다. 또한 이 매개변수가 -1 이외의 값으로 설정되면 충돌하는 잠금 또는 동시에 삭제된 관계로 인해 autovacuum 작업을 건너뛰면 메시지가 기록됩니다. 이 매개변수를 활성화하면 autovacuum 활동을 추적하는 데 도움이 될 수 있습니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
+autovacuum이 실행한 각 작업이 지정된 시간 이상 실행된 경우 기록되도록 합니다. 이것을 0으로 설정하면 모든 autovacuum 작업이 기록됩니다.
+-1(기본값)은 autovacuum 작업 로깅을 비활성화합니다. 이 값이 단위 없이 지정되면 밀리초로 간주됩니다. 예를 들어, 이것을 250ms로 설정하면 250ms 이상 실행되는 모든 automatic vacuums 및 분석이 기록됩니다. 또한 이 매개변수가 -1 이외의 값으로 설정되면 충돌하는 잠금 또는 동시에 삭제된 관계로 인해 autovacuum 작업을 건너뛰면 메시지가 기록됩니다. 이 매개변수를 활성화하면 autovacuum 활동을 추적하는 데 도움이 될 수 있습니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
 
 autovacuum_max_workers(integer)
-한 번에 실행할 수 있는 autovacuum 프로세스(autovacuum 실행 프로그램 제외)의 최대 수를 지정합니다. 기본값은 3입니다. 이 매개변수는 서버 시작시에만 설정할 수 있습니다.
+한 번에 실행할 수 있는 autovacuum 프로세스(autovacuum 실행 프로그램 제외)의 최대 수를 지정합니다. 기본값은 3입니다.
+이 매개변수는 서버 시작시에만 설정할 수 있습니다.
 
 autovacuum_naptime(integer)
-주어진 데이터베이스에서 autovacuum 실행 사이의 최소 지연을 지정합니다. 각 라운드에서 데몬은 데이터베이스를 검사하고 해당 데이터베이스의 테이블에 대해 필요에 따라 VACUUM 및 ANALYZE 명령을 실행합니다. 이 값이 단위 없이 지정되면 초로 간주됩니다. 기본값은 1분(1분)입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
+주어진 데이터베이스에서 autovacuum 실행 사이의 최소 지연을 지정합니다.
+각 라운드에서 데몬은 데이터베이스를 검사하고 해당 데이터베이스의 테이블에 대해 필요에 따라 VACUUM 및 ANALYZE 명령을 실행합니다.
+이 값이 단위 없이 지정되면 초로 간주됩니다. 기본값은 1분(1분)입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
 
 autovacuum_vacuum_threshold(integer)
-한 테이블에서 VACUUM을 트리거하는 데 필요한 업데이트 또는 삭제된 튜플의 최소수를 지정합니다. 기본값은 50튜플입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
+한 테이블에서 VACUUM을 트리거하는 데 필요한 업데이트 또는 삭제된 튜플의 최소수를 지정합니다. 기본값은 50튜플입니다.
+이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
 
 autovacuum_analyze_threshold(integer)
-한 테이블에서 ANALYZE를 트리거하는 데 필요한 삽입, 업데이트 또는 삭제된 튜플의 최소 수를 지정합니다. 기본값은 50튜플입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
+한 테이블에서 ANALYZE를 트리거하는 데 필요한 삽입, 업데이트 또는 삭제된 튜플의 최소 수를 지정합니다. 기본값은 50튜플입니다.
+이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
 
 autovacuum_vacuum_scale_factor(floating point)
-VACUUM을 트리거할지 여부를 결정할 때 autovacuum_vacuum_threshold에 추가할 테이블 크기의 일부를 지정합니다. 기본값은 0.2(테이블 크기의 20%)입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
+VACUUM을 트리거할지 여부를 결정할 때 autovacuum_vacuum_threshold에 추가할 테이블 크기의 일부를 지정합니다.
+기본값은 0.2(테이블 크기의 20%)입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
+그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
 
 autovacuum_analyze_scale_factor(floating point)
-ANALYZE를 트리거할지 여부를 결정할 때 autovacuum_analyze_threshold에 추가할 테이블 크기의 일부를 지정합니다. 기본값은 0.1(테이블 크기의 10%)입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
+ANALYZE를 트리거할지 여부를 결정할 때 autovacuum_analyze_threshold에 추가할 테이블 크기의 일부를 지정합니다.
+기본값은 0.1(테이블 크기의 10%)입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
+그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
 
 autovacuum_freeze_max_age(integer)
-테이블 내에서 트랜잭션 ID 랩어라운드를 방지하기 위해 VACUUM 작업이 강제 실행되기 전에 테이블의 pg_class.relfrozenxid 필드가 도달할 수 있는 최대 기간(트랜잭션 내)을 지정합니다. 시스템은 autovacuum이 비활성화된 경우에도 랩어라운드를 방지하기 위해 autovacuum 프로세스를 시작합니다.
+테이블 내에서 트랜잭션 ID 랩어라운드를 방지하기 위해 VACUUM 작업이 강제 실행되기 전에 테이블의 pg_class.relfrozenxid 필드가 도달할 수 있는 최대 기간(트랜잭션 내)을 지정합니다.
+시스템은 autovacuum이 비활성화된 경우에도 랩어라운드를 방지하기 위해 autovacuum 프로세스를 시작합니다.
 
-Vacuum은 또한 pg_xact 하위 디렉토리에서 오래된 파일을 제거할수 있도록 하므로 기본값은 상대적으로 낮은 2억 트랜잭션입니다. 이 매개변수는 서버 시작시에만 설정할 수 있지만 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대해 설정을 줄일 수 있습니다. 자세한 내용은 섹션 24.1.5를 참조하십시오.
+Vacuum은 또한 pg_xact 하위 디렉토리에서 오래된 파일을 제거할수 있도록 하므로 기본값은 상대적으로 낮은 2억 트랜잭션입니다.
+이 매개변수는 서버 시작시에만 설정할 수 있지만 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대해 설정을 줄일 수 있습니다. 자세한 내용은 섹션 24.1.5를 참조하십시오.
 섹션 24.1.5 : https://www.postgresql.org/docs/12/routine-vacuuming.html#VACUUM-FOR-WRAPAROUND
 
 autovacuum_multixact_freeze_max_age(integer)
-테이블 내에서 multixact ID 랩어라운드를 방지하기 위해 VACUUM 작업이 강제 실행되기 전에 테이블의 pg_class.relminmxid 필드가 도달할 수 있는 최대 수명(multixact에서)을 지정합니다. 시스템은 autovacuum이 비활성화된 경우에도 랩어라운드를 방지하기 위해 autovacuum 프로세스를 시작합니다.
+테이블 내에서 multixact ID 랩어라운드를 방지하기 위해 VACUUM 작업이 강제 실행되기 전에 테이블의 pg_class.relminmxid 필드가 도달할 수 있는 최대 수명(multixact에서)을 지정합니다.
+시스템은 autovacuum이 비활성화된 경우에도 랩어라운드를 방지하기 위해 autovacuum 프로세스를 시작합니다.
 
-multixact를 Vacuuming 처리하면 pg_multixact/members 및 pg_multixact/offsets 하위 디렉토리에서 오래된 파일을 제거할 수도 있습니다. 이것이 기본값이 상대적으로 낮은 4억 개의 multixact인 이유입니다. 이 매개변수는 서버 시작시에만 설정할 수 있지만 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대해 설정을 줄일 수 있습니다. 자세한 내용은 섹션 24.1.5.1을 참조하십시오.
+multixact를 Vacuuming 처리하면 pg_multixact/members 및 pg_multixact/offsets 하위 디렉토리에서 오래된 파일을 제거할 수도 있습니다.
+이것이 기본값이 상대적으로 낮은 4억 개의 multixact인 이유입니다.
+이 매개변수는 서버 시작시에만 설정할 수 있지만 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대해 설정을 줄일 수 있습니다.
+자세한 내용은 섹션 24.1.5.1을 참조하십시오.
 섹션 24.1.5.1 : https://www.postgresql.org/docs/12/routine-vacuuming.html#VACUUM-FOR-MULTIXACT-WRAPAROUND
 
 autovacuum_vacuum_cost_delay(floating point)
-자동 VACUUM 작업에 사용될 비용 지연 값을 지정합니다. -1이 지정되면 일반 vacuum_cost_delay 값이 사용됩니다. 이 값이 단위 없이 지정되면 밀리초로 간주됩니다. 기본값은 2밀리초입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
+자동 VACUUM 작업에 사용될 비용 지연 값을 지정합니다. -1이 지정되면 일반 vacuum_cost_delay 값이 사용됩니다. 이 값이 단위 없이 지정되면 밀리초로 간주됩니다.
+기본값은 2밀리초입니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
+그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
 
 autovacuum_vacuum_cost_limit(integer)
-자동 VACUUM 작업에 사용될 비용 제한 값을 지정합니다. -1이 지정되면(기본값) 일반 vacuum_cost_limit 값이 사용됩니다. 값은 실행 중인 autovacuum 작업자(둘 이상인 경우) 간에 비례적으로 분배되므로 각 작업자의 제한 합계가 이 변수의 값을 초과하지 않습니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.
+자동 VACUUM 작업에 사용될 비용 제한 값을 지정합니다. -1이 지정되면(기본값) 일반 vacuum_cost_limit 값이 사용됩니다.
+값은 실행 중인 autovacuum 작업자(둘 이상인 경우) 간에 비례적으로 분배되므로 각 작업자의 제한 합계가 이 변수의 값을 초과하지 않습니다.
+이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다. 그러나 테이블 스토리지 매개변수를 변경하여 개별 테이블에 대한 설정을 무시할 수 있습니다.

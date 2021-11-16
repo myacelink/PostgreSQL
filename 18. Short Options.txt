@@ -1,24 +1,25 @@
-편의를 위해 일부 매개변수에 사용할 수 있는 단일 문자 명령줄 옵션 스위치도 있습니다. 표 19.3에 설명되어 있습니다. 이러한 옵션 중 일부는 역사적 이유로 존재하며, 단일 문자 옵션으로 존재한다고 해서 반드시 해당 옵션을 많이 사용하도록 지지하는 것은 아닙니다.
+편의를 위해 일부 매개변수에 사용할 수 있는 단일 문자 명령줄 옵션 스위치도 있습니다. 표 19.3에 설명되어 있습니다.
+이러한 옵션 중 일부는 역사적 이유로 존재하며, 단일 문자 옵션으로 존재한다고 해서 반드시 해당 옵션을 많이 사용하도록 지지하는 것은 아닙니다.
 
 표 19.3. 짧은 옵션 키
-Short Option           Equivalent
--B x                   shared_buffers = x
--d x                   log_min_messages = DEBUGx
--e	                   datestyle = euro
--fb, -fh, -fi, -fm,    enable_bitmapscan = off, enable_hashjoin = off, enable_indexscan = off, enable_mergejoin = off, enable_nestloop = off, enable_indexonlyscan = off, enable_seqscan = off, enable_tidscan = off
+Short Option         |  Equivalent
+-B x                 |  shared_buffers = x
+-d x                 |  log_min_messages = DEBUGx
+-e	                 |  datestyle = euro
+-fb, -fh, -fi, -fm,  |  enable_bitmapscan = off, enable_hashjoin = off, enable_indexscan = off, enable_mergejoin = off, enable_nestloop = off, enable_indexonlyscan = off, enable_seqscan = off, enable_tidscan = off
 -fn, -fo, -fs, -ft	
--F	                   fsync = off
--h x                   listen_addresses = x
--i                     listen_addresses = '*'
--k x                   unix_socket_directories = x
--l                     ssl = on
--N x                   max_connections = x
--O                     allow_system_table_mods = on
--p x                   port = x
--P                     ignore_system_indexes = on
--s                     log_statement_stats = on
--S x                   work_mem = x
--tpa, -tpl, -te        log_parser_stats = on, log_planner_stats = on, log_executor_stats = on
--W x                   post_auth_delay = x
+-F	                 |  fsync = off
+-h x                 |  listen_addresses = x
+-i                   |  listen_addresses = '*'
+-k x                 |  unix_socket_directories = x
+-l                   |  ssl = on
+-N x                 |  max_connections = x
+-O                   |  allow_system_table_mods = on
+-p x                 |  port = x
+-P                   |  ignore_system_indexes = on
+-s                   |  log_statement_stats = on
+-S x                 |  work_mem = x
+-tpa, -tpl, -te      |  log_parser_stats = on, log_planner_stats = on, log_executor_stats = on
+-W x                 |  post_auth_delay = x
 
 https://www.postgresql.org/docs/12/runtime-config-short.html

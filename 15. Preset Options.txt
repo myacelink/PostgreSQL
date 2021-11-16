@@ -1,17 +1,21 @@
-다음 "매개변수"는 읽기 전용이며 PostgreSQL이 컴파일되거나 설치될 때 결정됩니다. 따라서 샘플 postgresql.conf 파일에서 제외되었습니다. 이러한 옵션은 특정 애플리케이션, 특히 관리 프런트 엔드에서 관심을 가질 수 있는 PostgreSQL 동작의 다양한 측면을 보고합니다.
+다음 "매개변수"는 읽기 전용이며 PostgreSQL이 컴파일되거나 설치될 때 결정됩니다. 따라서 샘플 postgresql.conf 파일에서 제외되었습니다.
+이러한 옵션은 특정 애플리케이션, 특히 관리 프런트 엔드에서 관심을 가질 수 있는 PostgreSQL 동작의 다양한 측면을 보고합니다.
 
 block_size(integer)
-디스크 블록의 크기를 보고합니다. 서버 구축 시 BLCKSZ 값에 의해 결정됩니다. 기본값은 8192바이트입니다. 일부 구성 변수(예: shared_buffers)의 의미는 block_size의 영향을 받습니다. 자세한 내용은 섹션 19.4를 참조하십시오.
+디스크 블록의 크기를 보고합니다. 서버 구축 시 BLCKSZ 값에 의해 결정됩니다. 기본값은 8192바이트입니다.
+일부 구성 변수(예: shared_buffers)의 의미는 block_size의 영향을 받습니다. 자세한 내용은 섹션 19.4를 참조하십시오.
 섹션 19.4: https://www.postgresql.org/docs/12/runtime-config-resource.html
 
 data_checksums(boolean)
 이 클러스터에 대해 데이터 체크섬이 활성화되었는지 여부를 보고합니다. 자세한 내용은 데이터 체크섬을 참조하세요.
 
 data_directory_mode(integer)
-Unix 시스템에서 이 매개변수는 시작시(data_directory)에 의해 정의된 데이터 디렉토리의 권한을 보고합니다. (Microsoft Windows에서 이 매개변수는 항상 0700을 표시합니다). 자세한 내용은 그룹 액세스를 참조하세요.
+Unix 시스템에서 이 매개변수는 시작시(data_directory)에 의해 정의된 데이터 디렉토리의 권한을 보고합니다.
+(Microsoft Windows에서 이 매개변수는 항상 0700을 표시합니다). 자세한 내용은 그룹 액세스를 참조하세요.
 
 debug_assertions(boolean)
-PostgreSQL이 어설션이 활성화된 상태로 빌드되었는지 여부를 보고합니다. PostgreSQL이 빌드될 때 매크로 USE_ASSERT_CHECKING이 정의된 경우입니다(예: 구성 옵션 --enable-cassert로 수행). 기본적으로 PostgreSQL은 어설션 없이 빌드됩니다.
+PostgreSQL이 어설션이 활성화된 상태로 빌드되었는지 여부를 보고합니다.
+PostgreSQL이 빌드될 때 매크로 USE_ASSERT_CHECKING이 정의된 경우입니다(예: 구성 옵션 --enable-cassert로 수행). 기본적으로 PostgreSQL은 어설션 없이 빌드됩니다.
 
 integer_datetimes(boolean)
 PostgreSQL이 64비트 정수 날짜 및 시간을 지원하도록 구축되었는지 여부를 보고합니다. PostgreSQL 10부터는 항상 켜져 있습니다.
@@ -21,20 +25,23 @@ lc_collate(string)
 섹션 23.1 : https://www.postgresql.org/docs/12/locale.html
 
 lc_ctype(string)
-문자 분류를 결정하는 로케일을 보고합니다. 자세한 내용은 23.1절을 참조하십시오. 이 값은 데이터베이스가 생성될 때 결정됩니다. 일반적으로 이것은 lc_collate와 동일하지만 특수 응용 프로그램의 경우 다르게 설정될 수 있습니다.
+문자 분류를 결정하는 로케일을 보고합니다. 자세한 내용은 23.1절을 참조하십시오. 이 값은 데이터베이스가 생성될 때 결정됩니다.
+일반적으로 이것은 lc_collate와 동일하지만 특수 응용 프로그램의 경우 다르게 설정될 수 있습니다.
 섹션 23.1 : https://www.postgresql.org/docs/12/locale.html
 
 max_function_args(integer)
 함수 인수의 최대 수를 보고합니다. 서버 구축 시 FUNC_MAX_ARGS 값에 의해 결정된다. 기본값은 100개의 인수입니다.
 
 max_identifier_length(integer)
-최대 식별자 길이를 보고합니다. 서버 구축 시 NAMEDATALEN 값보다 하나 작은 값으로 결정한다. NAMEDATALEN의 기본값은 64입니다. 따라서 기본 max_identifier_length는 63바이트이며 멀티바이트 인코딩을 사용할 때 63자 미만일 수 있습니다.
+최대 식별자 길이를 보고합니다. 서버 구축 시 NAMEDATALEN 값보다 하나 작은 값으로 결정한다. NAMEDATALEN의 기본값은 64입니다.
+따라서 기본 max_identifier_length는 63바이트이며 멀티바이트 인코딩을 사용할 때 63자 미만일 수 있습니다.
 
 max_index_keys(integer)
 최대 인덱스 키 수를 보고합니다. 서버 구축 시 INDEX_MAX_KEYS 값으로 결정됩니다. 기본값은 32개의 키입니다.
 
 segment_size(integer)
-파일 세그먼트 내에 저장할 수 있는 블록(페이지) 수를 보고합니다. 서버 구축 시 RELSEG_SIZE 값으로 결정됩니다. 세그먼트 파일의 최대 크기(바이트)는 segment_size에 block_size를 곱한 것과 같습니다. 기본적으로 1GB입니다.
+파일 세그먼트 내에 저장할 수 있는 블록(페이지) 수를 보고합니다. 서버 구축 시 RELSEG_SIZE 값으로 결정됩니다.
+세그먼트 파일의 최대 크기(바이트)는 segment_size에 block_size를 곱한 것과 같습니다. 기본적으로 1GB입니다.
 
 server_encoding(string)
 데이터베이스 인코딩(문자 집합)을 보고합니다. 데이터베이스가 생성될 때 결정됩니다. 일반적으로 클라이언트는 client_encoding 값에만 관심이 있으면 됩니다.
@@ -46,7 +53,8 @@ server_version_num(integer)
 서버의 버전 번호를 정수로 보고합니다. 서버 구축 시 PG_VERSION_NUM 값에 의해 결정된다.
 
 ssl_library(string)
-이 PostgreSQL 서버가 구축된 SSL 라이브러리의 이름을 보고합니다(SSL이 현재 구성되지 않았거나 이 인스턴스에서 사용 중이더라도). 예를 들어 OpenSSL 또는 없는 경우 빈 문자열을 보고합니다.
+이 PostgreSQL 서버가 구축된 SSL 라이브러리의 이름을 보고합니다(SSL이 현재 구성되지 않았거나 이 인스턴스에서 사용 중이더라도).
+예를 들어 OpenSSL 또는 없는 경우 빈 문자열을 보고합니다.
 
 wal_block_size(integer)
 WAL 디스크 블록의 크기를 보고합니다. 서버 구축 시 XLOG_BLCKSZ 값에 의해 결정됩니다. 기본값은 8192바이트입니다.
