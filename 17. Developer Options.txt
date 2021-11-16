@@ -1,0 +1,104 @@
+다음 매개변수는 PostgreSQL 소스 코드에 대한 작업을 위한 것이며 경우에 따라 심하게 ​​손상된 데이터베이스의 복구를 지원하기 위한 것입니다. 프로덕션 데이터베이스에서 사용할 이유가 없어야 합니다. 따라서 샘플 postgresql.conf 파일에서 제외되었습니다. 이러한 매개변수 중 다수가 작동하려면 특별한 소스 컴파일 플래그가 필요합니다.
+
+allow_system_table_mods(boolean)
+시스템 테이블의 구조를 수정할 수 있습니다. 이것은 initdb에서 사용됩니다. 이 매개변수는 서버 시작 시에만 설정할 수 있습니다.
+
+ignore_system_indexes(boolean)
+시스템 테이블을 읽을 때 시스템 인덱스를 무시합니다(그러나 테이블을 수정할 때 인덱스를 업데이트함). 이것은 손상된 시스템 인덱스에서 복구할 때 유용합니다. 이 매개변수는 세션 시작 후에 변경할 수 없습니다.
+
+post_auth_delay(integer)
+인증 절차를 수행한 후 새 서버 프로세스가 시작될 때 지연되는 시간입니다. 이것은 개발자에게 디버거를 사용하여 서버 프로세스에 연결할 수 있는 기회를 제공하기 위한 것입니다. 이 값이 단위 없이 지정되면 초로 간주됩니다. 값이 0(기본값)이면 지연이 비활성화됩니다. 이 매개변수는 세션 시작 후에 변경할 수 없습니다.
+
+pre_auth_delay(integer)
+새 서버 프로세스가 분기된 직후 인증 절차를 수행하기 전에 지연되는 시간입니다. 이것은 개발자가 인증의 오작동을 추적하기 위해 디버거를 사용하여 서버 프로세스에 연결할 수 있는 기회를 제공하기 위한 것입니다. 이 값이 단위 없이 지정되면 초로 간주됩니다. 값이 0(기본값)이면 지연이 비활성화됩니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
+
+trace_notify(boolean)
+LISTEN 및 NOTIFY 명령에 대한 많은 양의 디버깅 출력을 생성합니다. client_min_messages 또는 log_min_messages는 이 출력을 클라이언트 또는 서버 로그에 각각 보내려면 DEBUG1 이하여야 합니다.
+
+trace_recovery_messages(enum)
+그렇지 않으면 기록되지 않을 복구 관련 디버깅 출력의 기록을 활성화합니다. 이 매개변수를 사용하면 특정 메시지에 대해서만 log_min_messages의 일반 설정을 무시할 수 있습니다. 이것은 핫 스탠바이 디버깅에 사용하기 위한 것입니다. 유효한 값은 DEBUG5, DEBUG4, DEBUG3, DEBUG2, DEBUG1 및 LOG입니다. 기본값인 LOG는 로깅 결정에 전혀 영향을 미치지 않습니다. 다른 값을 사용하면 해당 우선 순위 이상의 복구 관련 디버그 메시지가 LOG 우선 순위가 있는 것처럼 기록됩니다. log_min_messages의 공통 설정의 경우 이는 무조건 서버 로그로 보내는 결과를 낳습니다. 이 매개변수는 postgresql.conf 파일이나 서버 명령줄에서만 설정할 수 있습니다.
+
+trace_sort(boolean)
+켜져 있는 경우 정렬 작업 중 리소스 사용량에 대한 정보를 내보냅니다. 이 매개변수는 PostgreSQL이 컴파일될 때 TRACE_SORT 매크로가 정의된 경우에만 사용할 수 있습니다. (그러나 현재 기본적으로 TRACE_SORT가 정의되어 있습니다.)
+
+trace_locks(boolean)
+켜져 있으면 잠금 사용에 대한 정보를 내보냅니다. 덤프된 정보에는 잠금 작업 유형, 잠금 유형 및 잠그거나 잠금 해제되는 개체의 고유 식별자가 포함됩니다. 또한 이 개체에 이미 부여된 잠금 유형과 이 개체에 대해 대기 중인 잠금 유형에 대한 비트 마스크가 포함됩니다. 각 잠금 유형에 대해 부여된 잠금 및 대기 중인 잠금 수와 합계도 덤프됩니다. 로그 파일 출력의 예는 다음과 같습니다.
+
+LOG:  LockAcquire: new: lock(0xb7acd844) id(24688,24696,0,0,0,1)
+      grantMask(0) req(0,0,0,0,0,0,0)=0 grant(0,0,0,0,0,0,0)=0
+      wait(0) type(AccessShareLock)
+LOG:  GrantLock: lock(0xb7acd844) id(24688,24696,0,0,0,1)
+      grantMask(2) req(1,0,0,0,0,0,0)=1 grant(1,0,0,0,0,0,0)=1
+      wait(0) type(AccessShareLock)
+LOG:  UnGrantLock: updated: lock(0xb7acd844) id(24688,24696,0,0,0,1)
+      grantMask(0) req(0,0,0,0,0,0,0)=0 grant(0,0,0,0,0,0,0)=0
+      wait(0) type(AccessShareLock)
+LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
+      grantMask(0) req(0,0,0,0,0,0,0)=0 grant(0,0,0,0,0,0,0)=0
+      wait(0) type(INVALID)
+Details of the structure being dumped may be found in src/include/storage/lock.h.
+
+이 매개변수는 PostgreSQL이 컴파일될 때 LOCK_DEBUG 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+trace_lwlocks(boolean)
+켜져 있으면 경량 잠금 사용에 대한 정보를 내보냅니다. 경량 잠금은 주로 공유 메모리 데이터 구조에 대한 액세스를 상호 배제하기 위한 것입니다.
+
+이 매개변수는 PostgreSQL이 컴파일될 때 LOCK_DEBUG 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+trace_userlocks(boolean)
+켜져 있으면 사용자 잠금 사용에 대한 정보를 내보냅니다. 출력은 자문 잠금에 대해서만 trace_locks와 동일합니다.
+
+이 매개변수는 PostgreSQL이 컴파일될 때 LOCK_DEBUG 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+trace_lock_oidmin(integer)
+설정된 경우 이 OID 아래의 테이블에 대한 잠금을 추적하지 마십시오(시스템 테이블에 대한 출력을 피하기 위해 사용됨).
+
+이 매개변수는 PostgreSQL이 컴파일될 때 LOCK_DEBUG 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+trace_lock_table(integer)
+이 테이블(OID)에 대한 무조건 추적 잠금.
+
+이 매개변수는 PostgreSQL이 컴파일될 때 LOCK_DEBUG 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+debug_deadlocks(boolean)
+설정된 경우 교착 상태 시간 초과가 발생할 때 모든 현재 잠금에 대한 정보를 덤프합니다.
+
+이 매개변수는 PostgreSQL이 컴파일될 때 LOCK_DEBUG 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+log_btree_build_stats(boolean)
+설정하면 다양한 B-트리 작업에 대한 시스템 리소스 사용 통계(메모리 및 CPU)를 기록합니다.
+
+이 매개변수는 PostgreSQL이 컴파일될 때 BTREE_BUILD_STATS 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+wal_consistency_checking(string)
+이 매개변수는 WAL 다시 실행 루틴의 버그를 확인하는 데 사용됩니다. 활성화되면 WAL 레코드와 함께 수정된 버퍼의 전체 페이지 이미지가 레코드에 추가됩니다. 레코드가 이후에 재생되면 시스템은 먼저 각 레코드를 적용한 다음 레코드에 의해 수정된 버퍼가 저장된 이미지와 일치하는지 테스트합니다. 힌트 비트와 같은 특정 경우에는 사소한 변형이 허용되며 무시됩니다. 예상치 못한 차이로 인해 치명적인 오류가 발생하여 복구가 종료됩니다.
+
+이 설정의 기본값은 기능을 비활성화하는 빈 문자열입니다. all로 설정하여 모든 레코드를 확인하거나 쉼표로 구분된 리소스 관리자 목록으로 설정하여 해당 리소스 관리자에서 생성된 레코드만 확인할 수 있습니다. 현재 지원되는 리소스 관리자는 heap, heap2, btree, hash, gin, gist, sequence, spgist, brin 및 generic입니다. 수퍼유저만 이 설정을 변경할 수 있습니다.
+
+wal_debug(boolean)
+켜져 있으면 WAL 관련 디버깅 출력을 내보냅니다. 이 매개변수는 PostgreSQL이 컴파일될 때 WAL_DEBUG 매크로가 정의된 경우에만 사용할 수 있습니다.
+
+ignore_checksum_failure(boolean)
+데이터 체크섬이 활성화된 경우에만 적용됩니다.
+
+읽기 중 체크섬 실패를 감지하면 일반적으로 PostgreSQL이 오류를 보고하여 현재 트랜잭션을 중단합니다. ignore_checksum_failure를 on으로 설정하면 시스템이 실패를 무시하고(하지만 여전히 경고를 보고함) 처리를 계속합니다. 이 동작은 충돌, 전파 또는 숨기기 손상 또는 기타 심각한 문제를 일으킬 수 있습니다. 그러나 블록 헤더가 여전히 정상인 경우 오류를 극복하고 테이블에 여전히 존재할 수 있는 손상되지 않은 튜플을 검색할 수 있습니다. 헤더가 손상된 경우 이 옵션이 활성화된 경우에도 오류가 보고됩니다. 기본 설정은 꺼져 있으며 수퍼유저만 변경할 수 있습니다.
+
+zero_damaged_pages(boolean)
+손상된 페이지 헤더를 감지하면 일반적으로 PostgreSQL이 오류를 보고하여 현재 트랜잭션을 중단합니다. zero_damaged_pages를 on으로 설정하면 시스템이 대신 경고를 보고하고 메모리에서 손상된 페이지를 0으로 만들고 처리를 계속합니다. 이 동작은 데이터, 즉 손상된 페이지의 모든 행을 파괴합니다. 그러나 오류를 극복하고 테이블에 있을 수 있는 손상되지 않은 페이지에서 행을 검색할 수 있습니다. 하드웨어 또는 소프트웨어 오류로 인해 손상이 발생한 경우 데이터를 복구하는 데 유용합니다. 일반적으로 테이블의 손상된 페이지에서 데이터를 복구하려는 희망을 포기할 때까지 이 옵션을 설정하면 안 됩니다. 비워진 페이지는 디스크에 강제로 저장되지 않으므로 이 매개변수를 다시 끄기 전에 테이블이나 인덱스를 다시 만드는 것이 좋습니다. 기본 설정은 꺼져 있으며 수퍼유저만 변경할 수 있습니다.
+
+jit_debugging_support(boolean)
+LLVM에 필요한 기능이 있으면 생성된 기능을 GDB에 등록하십시오. 이렇게 하면 디버깅이 더 쉬워집니다. 기본 설정은 꺼져 있습니다. 이 매개변수는 서버 시작 시에만 설정할 수 있습니다.
+
+jit_dump_bitcode(boolean)
+생성된 LLVM IR을 data_directory 내부의 파일 시스템에 씁니다. 이것은 JIT 구현의 내부 작업에만 유용합니다. 기본 설정은 꺼져 있습니다. 이 매개변수는 수퍼유저만 변경할 수 있습니다.
+
+jit_expressions(boolean)
+JIT 컴파일이 활성화될 때 표현식이 JIT 컴파일되는지 여부를 결정합니다(섹션 31.2 참조). 기본값은 켜짐입니다.
+섹션 31.2 : https://www.postgresql.org/docs/12/jit-decision.html
+
+jit_profiling_support(boolean)
+LLVM에 필요한 기능이 있는 경우 성능이 JIT에서 생성된 기능을 프로파일링할 수 있도록 하는 데 필요한 데이터를 내보냅니다. $HOME/.debug/jit/에 파일을 기록합니다. 사용자는 원할 때 정리를 수행할 책임이 있습니다. 기본 설정은 꺼져 있습니다. 이 매개변수는 서버 시작 시에만 설정할 수 있습니다.
+
+jit_tuple_deforming(boolean)
+JIT 컴파일이 활성화될 때 튜플 변형이 JIT 컴파일되는지 여부를 결정합니다(섹션 31.2 참조). 기본값은 켜짐입니다.
+섹션 31.2 : https://www.postgresql.org/docs/12/jit-decision.html
